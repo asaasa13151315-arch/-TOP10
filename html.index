@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>私の理想顔アイドルTOP10</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff69b4;
+            --primary-light: #ffe4e1;
+            --bg-color: #fcf8f9;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --border-color: #ffb6c1;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(255, 182, 193, 0.3);
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #d87093;
+        }
+        h2 {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #333;
+        }
+        .instruction {
+            text-align: center;
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #666;
+        }
+        .counter-badge {
+            display: inline-block;
+            background-color: var(--primary-light);
+            color: #c71585;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 14px;
+            margin-top: 10px;
+            border: 1px solid var(--border-color);
+        }
+        .screen {
+            display: none;
+        }
+        .screen.active {
+            display: block;
+        }
+        /* Step 1: Grid 3x3 */
+        .grid-9 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .idol-card {
+            background: #fff;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            padding: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .idol-card.selected {
+            border-color: var(--primary-color);
+            background-color: var(--primary-light);
+        }
+        .idol-card img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 6px;
+        }
+        .idol-card .name {
+            font-size: 12px;
+            font-weight: 500;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            transition: opacity 0.2s;
+        }
+        .btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .btn-sub {
+            background-color: #f0f0f0;
+            color: #333;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .btn-sub:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* Step 2: Side-by-Side Comparison */
+        .comparison-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .compare-card {
+            flex: 1;
+            background: #fff;
+            border: 2px solid #ffb6c1;
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .compare-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(255,105,180,0.2);
+            background-color: var(--primary-light);
+        }
+        .compare-card img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 12px;
+        }
+        .compare-card .name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #333;
+        }
+        .progress-text {
+            text-align: center;
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 16px;
+        }
+
+        /* Step 3: Ranking Top 10 */
+        .ranking-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding-right: 4px;
+        }
+        .ranking-item {
+            display: flex;
+            align-items: center;
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            padding: 10px 16px;
+            gap: 16px;
+        }
+        .ranking-rank {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-color);
+            width: 30px;
+            text-align: center;
+        }
+        .ranking-item img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .ranking-name {
+            font-size: 16px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Step 1 -->
+        <div id="step1" class="screen active">
+            <header>
+                <span>私の理想顔アイドルTOP10</span>
+                <span id="page-info">1 / 12ページ</span>
+            </header>
+            <h2>理想顔アイドルを選ぼう！</h2>
+            <div class="instruction">
+                直感で「理想顔アイドル」を選択して<br>
+                次のページへ進んでください。<br>
+                <div class="counter-badge">選択中: <span id="selected-count">0</span>人 (推奨: 15〜20人)</div>
+            </div>
+            
+            <div class="grid-9" id="idol-grid"></div>
+
+            <div class="pagination">
+                <button class="btn-sub" id="prev-page" onclick="changePage(-1)">前へ</button>
+                <button class="btn-sub" id="next-page" onclick="changePage(1)">次へ</button>
+            </div>
+
+            <button class="btn" id="start-comparison-btn" onclick="startComparison()" disabled>比較をはじめる (10人以上選択してください)</button>
+        </div>
+
+        <!-- Step 2 -->
+        <div id="step2" class="screen">
+            <header>
+                <span>私の理想顔アイドルTOP10</span>
+                <span>比較中</span>
+            </header>
+            <h2>どちらの顔が好きですか？</h2>
+            <div class="progress-text" id="progress-text">比較進捗</div>
+            
+            <div class="comparison-container">
+                <div class="compare-card" onclick="selectPreferred(0)">
+                    <img id="comp-img-0" src="" alt="Idol 1">
+                    <div class="name" id="comp-name-0">アイドル名</div>
+                </div>
+                <div class="compare-card" onclick="selectPreferred(1)">
+                    <img id="comp-img-1" src="" alt="Idol 2">
+                    <div class="name" id="comp-name-1">アイドル名</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div id="step3" class="screen">
+            <header>
+                <span>私の理想顔アイドルTOP10</span>
+                <span>結果発表</span>
+            </header>
+            <h2>あなたの理想顔TOP10</h2>
+            <div class="ranking-list" id="ranking-list"></div>
+            <button class="btn" onclick="resetApp()">もう一度最初からやり直す</button>
+        </div>
+    </div>
+
+    <script>
+        // ダミーデータ100人分 (後からここに本番の画像URLや名前を差し替えられます)
+        const IDOL_DATA = Array.from({ length: 100 }, (_, i) => {
+            const id = i + 1;
+            const svgData = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150"><rect width="150" height="150" fill="%23ffe4e1"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="16" fill="%23d87093" font-family="sans-serif">アイドル ${id}</text></svg>`;
+            return {
+                id: id,
+                name: `アイドル ${id}`,
+                image: svgData
+            };
+        });
+
+        let selectedIds = new Set();
+        let currentPage = 0;
+        const ITEMS_PER_PAGE = 9;
+
+        function renderStep1() {
+            const grid = document.getElementById('idol-grid');
+            grid.innerHTML = '';
+            
+            const start = currentPage * ITEMS_PER_PAGE;
+            const end = Math.min(start + ITEMS_PER_PAGE, IDOL_DATA.length);
+            
+            for (let i = start; i < end; i++) {
+                const idol = IDOL_DATA[i];
+                const card = document.createElement('div');
+                card.className = `idol-card ${selectedIds.has(idol.id) ? 'selected' : ''}`;
+                card.onclick = () => toggleSelect(idol.id);
+                
+                card.innerHTML = `
+                    <img src="${idol.image}" alt="${idol.name}">
+                    <div class="name">${idol.name}</div>
+                `;
+                grid.appendChild(card);
+            }
+            
+            document.getElementById('page-info').innerText = `${currentPage + 1} / ${Math.ceil(IDOL_DATA.length / ITEMS_PER_PAGE)}ページ`;
+            document.getElementById('prev-page').disabled = currentPage === 0;
+            document.getElementById('next-page').disabled = end >= IDOL_DATA.length;
+            
+            const count = selectedIds.size;
+            document.getElementById('selected-count').innerText = count;
+            
+            const startBtn = document.getElementById('start-comparison-btn');
+            if (count >= 10) {
+                startBtn.disabled = false;
+                startBtn.innerText = `比較をはじめる (${count}人選択中)`;
+            } else {
+                startBtn.disabled = true;
+                startBtn.innerText = `比較をはじめる (あと${10 - count}人以上選択してください)`;
+            }
+        }
+
+        function toggleSelect(id) {
+            if (selectedIds.has(id)) {
+                selectedIds.delete(id);
+            } else {
+                selectedIds.add(id);
+            }
+            renderStep1();
+        }
+
+        function changePage(direction) {
+            const maxPage = Math.ceil(IDOL_DATA.length / ITEMS_PER_PAGE) - 1;
+            currentPage += direction;
+            if (currentPage < 0) currentPage = 0;
+            if (currentPage > maxPage) currentPage = maxPage;
+            renderStep1();
+        }
+
+        let comparisonPool = [];
+        let mergeSortGen = null;
+        let currentPair = [];
+
+        function startComparison() {
+            comparisonPool = IDOL_DATA.filter(idol => selectedIds.has(idol.id));
+            comparisonPool.sort(() => Math.random() - 0.5);
+            
+            mergeSortGen = mergeSort(comparisonPool);
+
+            document.getElementById('step1').classList.remove('active');
+            document.getElementById('step2').classList.add('active');
+            
+            nextComparisonStep();
+        }
+
+        function* mergeSort(arr) {
+            if (arr.length <= 1) return arr;
+            const mid = Math.floor(arr.length / 2);
+            const left = yield* mergeSort(arr.slice(0, mid));
+            const right = yield* mergeSort(arr.slice(mid));
+            return yield* merge(left, right);
+        }
+
+        function* merge(left, right) {
+            let result = [];
+            let i = 0, j = 0;
+            while (i < left.length && j < right.length) {
+                currentPair = [left[i], right[j]];
+                const preferredIndex = yield currentPair;
+                
+                if (preferredIndex === 0) {
+                    result.push(left[i]);
+                    i++;
+                } else {
+                    result.push(right[j]);
+                    j++;
+                }
+            }
+            return result.concat(left.slice(i)).concat(right.slice(j));
+        }
+
+        let genIterator = null;
+
+        function nextComparisonStep() {
+            if (!genIterator) {
+                genIterator = mergeSortGen.next();
+            }
+            
+            if (genIterator.done) {
+                showRanking(genIterator.value);
+                return;
+            }
+
+            currentPair = genIterator.value;
+            
+            document.getElementById('comp-img-0').src = currentPair[0].image;
+            document.getElementById('comp-name-0').innerText = currentPair[0].name;
+            document.getElementById('comp-img-1').src = currentPair[1].image;
+            document.getElementById('comp-name-1').innerText = currentPair[1].name;
+        }
+
+        function selectPreferred(index) {
+            genIterator = mergeSortGen.next(index);
+            nextComparisonStep();
+        }
+
+        function showRanking(sortedList) {
+            document.getElementById('step2').classList.remove('active');
+            document.getElementById('step3').classList.add('active');
+            
+            const listEl = document.getElementById('ranking-list');
+            listEl.innerHTML = '';
+            
+            const top10 = sortedList.slice(0, 10);
+            
+            top10.forEach((idol, index) => {
+                const item = document.createElement('div');
+                item.className = 'ranking-item';
+                item.innerHTML = `
+                    <div class="ranking-rank">${index + 1}</div>
+                    <img src="${idol.image}" alt="${idol.name}">
+                    <div class="ranking-name">${idol.name}</div>
+                `;
+                listEl.appendChild(item);
+            });
+        }
+
+        function resetApp() {
+            selectedIds.clear();
+            currentPage = 0;
+            genIterator = null;
+            document.getElementById('step3').classList.remove('active');
+            document.getElementById('step1').classList.add('active');
+            renderStep1();
+        }
+
+        renderStep1();
+    </script>
+</body>
+</html>
