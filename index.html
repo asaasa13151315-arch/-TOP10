@@ -27,7 +27,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
+            padding: 16px;
         }
         .app-container {
             width: 100%;
@@ -35,7 +35,7 @@
             background: var(--card-bg);
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(255, 182, 193, 0.3);
-            padding: 24px;
+            padding: 20px;
             position: relative;
             overflow: hidden;
         }
@@ -43,34 +43,34 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            font-size: 14px;
+            margin-bottom: 16px;
+            font-size: 13px;
             font-weight: 500;
             color: #d87093;
         }
         h2 {
             text-align: center;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             color: #333;
         }
         .instruction {
             text-align: center;
-            font-size: 14px;
-            line-height: 1.8;
-            margin-bottom: 20px;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 16px;
             color: #666;
         }
         .counter-badge {
             display: inline-block;
             background-color: var(--primary-light);
             color: #c71585;
-            padding: 8px 18px;
+            padding: 6px 16px;
             border-radius: 20px;
             font-weight: 700;
-            font-size: 14px;
-            margin-top: 10px;
+            font-size: 13px;
+            margin-top: 8px;
             border: 1px solid var(--border-color);
         }
         .screen {
@@ -79,12 +79,11 @@
         .screen.active {
             display: block;
         }
-        /* Step 1: Grid 3x3 */
         .grid-9 {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 20px;
+            gap: 10px;
+            margin-bottom: 16px;
         }
         .idol-card {
             background: #fff;
@@ -94,6 +93,9 @@
             text-align: center;
             cursor: pointer;
             transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         .idol-card.selected {
             border-color: var(--primary-color);
@@ -101,14 +103,16 @@
         }
         .idol-card img {
             width: 100%;
-            aspect-ratio: 1;
+            aspect-ratio: 1 / 1; /* 完全に正方形に固定 */
             object-fit: cover;
             border-radius: 8px;
+            background-color: #f0f0f0;
             margin-bottom: 6px;
         }
         .idol-card .name {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 500;
+            width: 100%;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -117,19 +121,19 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
         .btn {
             background-color: var(--primary-color);
             color: white;
             border: none;
-            padding: 12px 24px;
+            padding: 12px;
             border-radius: 25px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
             cursor: pointer;
             width: 100%;
-            transition: opacity 0.2s;
+            text-align: center;
         }
         .btn:disabled {
             background-color: #cccccc;
@@ -142,63 +146,54 @@
             padding: 8px 16px;
             border-radius: 15px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
         }
         .btn-sub:disabled {
             opacity: 0.4;
             cursor: not-allowed;
         }
-
-        /* Step 2: Side-by-Side Comparison */
         .comparison-container {
             display: flex;
             justify-content: space-between;
-            gap: 16px;
-            margin-bottom: 24px;
+            gap: 12px;
+            margin-bottom: 20px;
         }
         .compare-card {
             flex: 1;
             background: #fff;
             border: 2px solid #ffb6c1;
             border-radius: 16px;
-            padding: 16px;
+            padding: 12px;
             text-align: center;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-        .compare-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(255,105,180,0.2);
-            background-color: var(--primary-light);
         }
         .compare-card img {
             width: 100%;
-            aspect-ratio: 1;
+            aspect-ratio: 1 / 1; /* 比較画面も正方形に固定 */
             object-fit: cover;
             border-radius: 12px;
-            margin-bottom: 12px;
+            background-color: #f0f0f0;
+            margin-bottom: 8px;
         }
         .compare-card .name {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 700;
             color: #333;
         }
         .progress-text {
             text-align: center;
-            font-size: 14px;
+            font-size: 13px;
             color: #888;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
-
-        /* Step 3: Ranking Top 10 */
         .ranking-list {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            max-height: 400px;
+            gap: 8px;
+            max-height: 360px;
             overflow-y: auto;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             padding-right: 4px;
         }
         .ranking-item {
@@ -206,25 +201,26 @@
             align-items: center;
             background: #fff;
             border: 1px solid #eee;
-            border-radius: 12px;
-            padding: 10px 16px;
-            gap: 16px;
+            border-radius: 10px;
+            padding: 8px 12px;
+            gap: 12px;
         }
         .ranking-rank {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
             color: var(--primary-color);
-            width: 30px;
+            width: 24px;
             text-align: center;
         }
         .ranking-item img {
-            width: 48px;
-            height: 48px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             object-fit: cover;
+            background-color: #f0f0f0;
         }
         .ranking-name {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
         }
     </style>
@@ -288,14 +284,14 @@
     </div>
 
     <script>
-        // ダミーデータ100人分 (後からここに本番の画像URLや名前を差し替えられます)
+        // サンプルデータ（ここに実際のアイドルデータを追加していきます）
         const IDOL_DATA = Array.from({ length: 100 }, (_, i) => {
             const id = i + 1;
-            const svgData = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150"><rect width="150" height="150" fill="%23ffe4e1"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="16" fill="%23d87093" font-family="sans-serif">アイドル ${id}</text></svg>`;
+            const svgStr = `<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150"><rect width="150" height="150" fill="%23ffe4e1"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="14" fill="%23d87093">アイドル ${id}</text></svg>`;
             return {
                 id: id,
                 name: `アイドル ${id}`,
-                image: svgData
+                image: `data:image/svg+xml;utf8,${encodeURIComponent(svgStr)}`
             };
         });
 
@@ -305,6 +301,7 @@
 
         function renderStep1() {
             const grid = document.getElementById('idol-grid');
+            if (!grid) return;
             grid.innerHTML = '';
             
             const start = currentPage * ITEMS_PER_PAGE;
@@ -361,11 +358,14 @@
         let mergeSortGen = null;
         let currentPair = [];
 
+        let genIterator = null;
+
         function startComparison() {
             comparisonPool = IDOL_DATA.filter(idol => selectedIds.has(idol.id));
             comparisonPool.sort(() => Math.random() - 0.5);
             
             mergeSortGen = mergeSort(comparisonPool);
+            genIterator = null; // リセット
 
             document.getElementById('step1').classList.remove('active');
             document.getElementById('step2').classList.add('active');
@@ -399,8 +399,6 @@
             return result.concat(left.slice(i)).concat(right.slice(j));
         }
 
-        let genIterator = null;
-
         function nextComparisonStep() {
             if (!genIterator) {
                 genIterator = mergeSortGen.next();
@@ -420,8 +418,17 @@
         }
 
         function selectPreferred(index) {
-            genIterator = mergeSortGen.next(index);
-            nextComparisonStep();
+            if (!genIterator) return;
+            const res = genIterator.next(index);
+            if (res.done) {
+                showRanking(res.value);
+            } else {
+                currentPair = res.value;
+                document.getElementById('comp-img-0').src = currentPair[0].image;
+                document.getElementById('comp-name-0').innerText = currentPair[0].name;
+                document.getElementById('comp-img-1').src = currentPair[1].image;
+                document.getElementById('comp-name-1').innerText = currentPair[1].name;
+            }
         }
 
         function showRanking(sortedList) {
